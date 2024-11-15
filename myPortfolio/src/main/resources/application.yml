@@ -1,0 +1,22 @@
+spring : 
+  profiles : 
+    active : local
+
+  datasource : 
+    url : jdbc:oracle:thin:@localhost:1521/xe
+    username : my_portfolio
+    password : 1234
+    driver-class-name : oracle.jdbc.driver.OracleDriver
+    
+  jpa : 
+    hibernate : 
+      ddl-auto : create
+    properties :
+      hibernate : 
+#        show_sql : tru
+        format_sql : true
+        use_sql_comments : true # 실행되는 JPQL 로그
+        
+logging.level : 
+  org.hibernate.SQL : debug
+#  org.hibernate.type : trace
