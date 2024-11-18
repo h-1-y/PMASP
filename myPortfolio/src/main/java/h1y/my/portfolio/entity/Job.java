@@ -28,8 +28,8 @@ public class Job extends BaseEntity {
 	@Column(name = "JOB_NAME")
 	@Comment(value = "직군명")
 	private String name;
-	
-	@OneToMany(mappedBy = "job")
-	private List<Member> members = new ArrayList<>();
+
+//	@OneToMany(mappedBy = "job")
+//	private List<Member> members = new ArrayList<>();
 	
 }
