@@ -6,10 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,23 +23,32 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@SequenceGenerator(
+					  name = "MEMBER_SEQ_GENERATOR"
+					, sequenceName = "MEMBER_SEQ"
+					, initialValue = 1
+					, allocationSize = 1
+				  )
 public class Member extends BaseEntity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(
+						  strategy = GenerationType.SEQUENCE
+						, generator = "MEMBER_SEQ_GENERATOR"
+				   )
 	@Column(name = "M_ID")
 	@Comment(value = "일련번호")
 	private Long id;
 	
-	@Column(name = "M_LOGIN_ID")
+	@Column(name = "M_LOGIN_ID", length = 16, nullable = false)
 	@Comment(value = "아이디")
 	private String loginId;
 	
-	@Column(name = "M_PASSWORD")
+	@Column(name = "M_PASSWORD", length = 20, nullable = false)
 	@Comment(value = "비밀번호")
 	private String password;
 	
-	@Column(name = "M_NAME")
+	@Column(name = "M_NAME", length = 50, nullable = false)
 	@Comment(value = "성명")
 	private String name;
 	

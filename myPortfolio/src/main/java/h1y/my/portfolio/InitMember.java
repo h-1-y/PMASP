@@ -31,7 +31,7 @@ public class InitMember {
 		@Transactional
 		public void init() {
 			
-			for ( int i=1; i<=100; i++ ) {
+			for ( int i=1; i<=10; i++ ) {
 				Member member = new Member("loginId" + i, "password" + i, "name" + i);
 				em.persist(member);
 			}
