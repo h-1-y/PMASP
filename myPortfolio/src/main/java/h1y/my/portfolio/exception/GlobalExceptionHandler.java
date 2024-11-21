@@ -8,9 +8,23 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import h1y.my.portfolio.dto.ErrorResponseDto;
+import h1y.my.portfolio.dto.ResponseDto;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponseDto> handleExceptions(Exception ex) {
+		
+		ErrorResponseDto errorResponseDto = new ErrorResponseDto(0, ex.getMessage());
+		System.out.println("asdasdasdasdasdasdasd");
+		ResponseDto.of(false, 0, "error test");
+		
+		return ResponseEntity.badRequest().body(errorResponseDto);
+		
+	}
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
 		
