@@ -8,12 +8,12 @@ public class DataResponseDto<T> extends ResponseDto {
 	private final T data;
 	
 	private DataResponseDto(T data) {
-        super(true, 0, "success");
+        super(true, 200, "OK", "success");
         this.data = data;
     }
 
     private DataResponseDto(T data, String message) {
-        super(true, 0, "success");
+        super(true, 200, "OK", "success");
         this.data = data;
     }
 
