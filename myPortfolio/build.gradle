@@ -49,6 +49,10 @@ dependencies {
     
     // oracle
     runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+    
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    
 }
 
 tasks.named('test') {

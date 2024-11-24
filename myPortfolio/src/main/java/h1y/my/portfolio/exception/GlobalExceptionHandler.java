@@ -1,13 +1,9 @@
 package h1y.my.portfolio.exception;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.coyote.BadRequestException;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,30 +17,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GlobalExceptionHandler {
 
-	// Global
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorResponseDto> handleGlobalExceptions(Exception ex) {
-		printLog(500, "INTERNAL_SERVER_ERROR", ex.getMessage());
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponseDto(500, "INTERNAL_SERVER_ERROR", ex.getMessage()));
-	}
-	
 	// STATUS CODE : 400
 	// Validation
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+	public ResponseEntity<ErrorResponseDto> handleValidationExceptions(MethodArgumentNotValidException ex) {
 		
-		Map<String, String> errors = new HashMap<>();
+		StringBuilder sb = new StringBuilder();
 		
 		ex.getBindingResult().getFieldErrors().forEach(error -> {
-		
-			System.out.println("error.getField() ====== " + error.getField());
-			System.out.println("error.getDefaultMessage() ======= " + error.getDefaultMessage());
-			
-			errors.put(error.getField(), error.getDefaultMessage());
-			
+			sb.append("(" + error.getField() + ") " + error.getDefaultMessage() + "\n");
 		});
 		
-		return ResponseEntity.badRequest().body(errors);
+		printLog(400, "BAD_REQUEST", sb.toString());
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseDto(400, "BAD_REQUEST", sb.toString()));
 		
 	}
 	
@@ -83,10 +69,10 @@ public class GlobalExceptionHandler {
 	
 	// STATUS CODE : 405
 	// Method Not Allowed
-	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-	public ResponseEntity<ErrorResponseDto> handleMethodNotAllowedExceptions() {
-		printLog(405, "METHOD_NOT_ALLOWED", "지원되지 않는 HTTP 메서드");
-		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(new ErrorResponseDto(405, "METHOD_NOT_ALLOWED", "지원되지 않는 HTTP 메서드"));
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public ResponseEntity<ErrorResponseDto> handleMethodNotAllowedExceptions(HttpRequestMethodNotSupportedException ex) {
+		printLog(405, "METHOD_NOT_ALLOWED", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(new ErrorResponseDto(405, "METHOD_NOT_ALLOWED", ex.getMessage()));
 	}
 	
 	// STATUS CODE : 500
@@ -105,11 +91,21 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorResponseDto(503, "SERVICE_UNAVAILABLE", "서버 서비스 실패"));
 	}
 	
+	// Global
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorResponseDto> handleGlobalExceptions(Exception ex) {
+		printLog(500, "INTERNAL_SERVER_ERROR", ex.getMessage());
+		System.out.println("asdasdasdasd");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponseDto(500, "INTERNAL_SERVER_ERROR", ex.getMessage()));
+	}
+	
 	public void printLog(int code, String errorName, String message) {
 		
+		log.error("-------------------------------------------------------------------");
 		log.error("■ ERROR > STATUS 	: " + code);
 		log.error("■ ERROR > ERROR NAME   : " + errorName);
 		log.error("■ ERROR > MESSAGE 	: " + message);
+		log.error("-------------------------------------------------------------------");
 		
 	}
 	
