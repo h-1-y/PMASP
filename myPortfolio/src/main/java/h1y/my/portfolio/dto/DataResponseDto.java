@@ -13,7 +13,7 @@ public class DataResponseDto<T> extends ResponseDto {
     }
 
     private DataResponseDto(T data, String message) {
-        super(true, 200, "OK", "success");
+        super(true, 200, "OK", message);
         this.data = data;
     }
 

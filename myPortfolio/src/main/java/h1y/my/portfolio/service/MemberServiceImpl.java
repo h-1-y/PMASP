@@ -1,11 +1,15 @@
 package h1y.my.portfolio.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import h1y.my.portfolio.dto.MemberJoinRequestDto;
 import h1y.my.portfolio.entity.Member;
+import h1y.my.portfolio.repository.MemberJpaRepositoy;
 import h1y.my.portfolio.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,17 +19,22 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberServiceImpl implements MemberService {
 
-	private final MemberRepository memberRepository;
+	private final MemberJpaRepositoy memberJpaRepositoy;
+	private final PasswordEncoder passwordEncoder;
+//	private final MemberRepository memberRepository;
 	
 	@Override
-	public Long save(MemberJoinRequestDto memberJoinRequestDto) {
+	public Long join(MemberJoinRequestDto memberJoinRequestDto) {
 		
-		System.out.println("memberJoinRequestDto ===== " + memberJoinRequestDto.toString());
+		// 회원 아이디 중복 체크
+		int count = memberJpaRepositoy.findJoinLoginIdCheck(memberJoinRequestDto.getLoginId());
+		
+		if ( count >= 1 ) throw new IllegalStateException("이미 존재하는 회원입니다.");
+		
+		memberJoinRequestDto.setPassword(passwordEncoder.encode(memberJoinRequestDto.getPassword()));
+		
 		Member member = memberJoinRequestDto.toEntity();
-		System.out.println("member =========== " + member.getLoginId());
-		System.out.println("member =========== " + member.getPassword());
-		System.out.println("member =========== " + member.getName());
-		memberRepository.save(member);
+		memberJpaRepositoy.save(member);
 		
 		return member.getId();
 		
@@ -33,13 +42,13 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Member getMember(Long id) {
-		Member findMember = memberRepository.findById(id);
-		return findMember;
+		Optional<Member> findMember = memberJpaRepositoy.findById(id);
+		return findMember.get();
 	}
 	
 	@Override
 	public List<Member> getMembers() {
-		List<Member> members = memberRepository.findAll();
+		List<Member> members = memberJpaRepositoy.findAll();
 		return members;
 	}
 	

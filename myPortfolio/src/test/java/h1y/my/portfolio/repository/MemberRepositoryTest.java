@@ -3,6 +3,7 @@ package h1y.my.portfolio.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +26,15 @@ class MemberRepositoryTest {
 	@Autowired
 	MemberRepository memberRepository;
 	
+	@Autowired
+	MemberJpaRepositoy memberJpaRepositoy;
+	
 	@BeforeEach
 	public void setMember() {
 		
 		for ( int i=1; i<=100; i++ ) {
 			Member member = new Member("loginId" + i, "password" + i, "name" + i);
-			memberRepository.save(member);
+			memberJpaRepositoy.save(member);
 		}
 		
 	}
@@ -38,7 +42,7 @@ class MemberRepositoryTest {
 	@Test
 	public void saveTest() {
 		
-		List<Member> members = memberRepository.findAll();
+		List<Member> members = memberJpaRepositoy.findAll();
 		assertThat(members.size()).isEqualTo(100);
 		
 	}
@@ -46,8 +50,8 @@ class MemberRepositoryTest {
 	@Test
 	public void findMemberTest() {
 		
-		Member findMember = memberRepository.findById(3L);
-		assertThat(findMember.getLoginId()).isEqualTo("loginId3");
+		Optional<Member> findMember = memberJpaRepositoy.findById(3L);
+		assertThat(findMember.get().getLoginId()).isEqualTo("loginId3");
 		
 	}
 	

@@ -19,27 +19,21 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class MemberController {
+public class MemberController { 
 
 	private final MemberService memberService;
 	
-	@PostMapping("/api/v1/member")
+	@PostMapping("/api/v1/members")
 	public DataResponseDto<Object> save(@Valid MemberJoinRequestDto memberJoinRequestDto) {
-		return DataResponseDto.of(memberService.save(memberJoinRequestDto));
+		return DataResponseDto.of(memberService.join(memberJoinRequestDto), "회원가입 처리되었습니다.");
 	}
-	
-//	@PostMapping("/api/v1/member")
-//	public ResponseEntity<String> save(@Valid MemberJoinRequestDto memberJoinRequestDto) {
-//		memberService.save(memberJoinRequestDto);
-//		return ResponseEntity.ok("User registered successfully.");
-//	}
 	
 	@GetMapping("/api/v1/members")
 	public DataResponseDto<List<Member>> getMembers() {
 		return DataResponseDto.of(memberService.getMembers());
 	}
 	
-	@GetMapping("/api/v1/member/{id}")
+	@GetMapping("/api/v1/members/{id}")
 	public DataResponseDto<Member> getMember(@PathVariable("id") Long id) {
 		return DataResponseDto.of(memberService.getMember(id));
 	}

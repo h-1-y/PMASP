@@ -7,7 +7,7 @@ import h1y.my.portfolio.entity.Member;
 
 public interface MemberService {
 
-	Long save(MemberJoinRequestDto memberJoinRequestDto);
+	Long join(MemberJoinRequestDto memberJoinRequestDto);
 	
 	Member getMember(Long id);
 	

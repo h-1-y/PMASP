@@ -20,19 +20,4 @@ public class MemberRepository {
 		this.em = em;
 	}
 	
-	@Transactional
-	public Long save(Member member) {
-		em.persist(member); 
-		return member.getId(); 
-	}
-	
-	public Member findById(Long id) {
-		Member findMember = em.find(Member.class, id);
-		return findMember;
-	}
-	
-	public List<Member> findAll() {
-		return em.createQuery("select m from Member m", Member.class).getResultList();
-	}
-	
 }

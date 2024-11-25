@@ -2,6 +2,7 @@ package h1y.my.portfolio.entity;
 
 import org.hibernate.annotations.Comment;
 
+import h1y.my.portfolio.dto.MemberInfoDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,11 +41,11 @@ public class Member extends BaseEntity {
 	@Comment(value = "일련번호")
 	private Long id;
 	
-	@Column(name = "M_LOGIN_ID", length = 16, nullable = false)
+	@Column(name = "M_LOGIN_ID", length = 16, nullable = false, unique = true)
 	@Comment(value = "아이디")
 	private String loginId;
 	
-	@Column(name = "M_PASSWORD", length = 20, nullable = false)
+	@Column(name = "M_PASSWORD", length = 200, nullable = false)
 	@Comment(value = "비밀번호")
 	private String password;
 	
@@ -94,6 +95,15 @@ public class Member extends BaseEntity {
 		this.loginId = loginId;
 		this.password = password;
 		this.name = name;
+	}
+	
+	public MemberInfoDto toDto() {
+		return MemberInfoDto.builder()
+				.id(this.id)
+				.loginId(this.loginId)
+				.password(this.password)
+				.name(this.name)
+				.build();
 	}
 	
 }
