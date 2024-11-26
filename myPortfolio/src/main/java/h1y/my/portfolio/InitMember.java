@@ -1,6 +1,7 @@
 package h1y.my.portfolio;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import h1y.my.portfolio.entity.Member;

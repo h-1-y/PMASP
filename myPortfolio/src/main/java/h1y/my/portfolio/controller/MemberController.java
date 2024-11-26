@@ -24,7 +24,7 @@ public class MemberController {
 	private final MemberService memberService;
 	
 	@PostMapping("/api/v1/members")
-	public DataResponseDto<Object> save(@Valid MemberJoinRequestDto memberJoinRequestDto) {
+	public DataResponseDto<Object> save(@Valid @RequestBody MemberJoinRequestDto memberJoinRequestDto) {
 		return DataResponseDto.of(memberService.join(memberJoinRequestDto), "회원가입 처리되었습니다.");
 	}
 	

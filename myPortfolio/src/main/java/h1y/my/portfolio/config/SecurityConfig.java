@@ -10,7 +10,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import h1y.my.portfolio.config.jwt.JwtAccessDenyHandler;
 import h1y.my.portfolio.config.jwt.JwtAuthFilter;
+import h1y.my.portfolio.config.jwt.JwtAuthenticationEntryPoint;
 import h1y.my.portfolio.config.jwt.JwtUtils;
 import h1y.my.portfolio.service.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
@@ -24,11 +26,15 @@ public class SecurityConfig {
 	private final CustomUserDetailsService customUserDetailsService;
 	private final JwtUtils jwtUtils;
 	
-	private static final String [] AUTH_WHITE_LIST = { "/api/v1/members/**", "/api/v1/auth/**" };
+	private static final String [] AUTH_WHITE_LIST = { 
+					  "/api/v1/members/**", "/api/v1/auth/**", "/swagger-ui/**" 
+					, "/swagger-ui-custom.html", "/swagger-ui.html", "/api-docs/**"
+					, "/api-docs", "/v3/api-docs/**"
+				};
 	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		System.out.println("SecurityConfig Class =================");
+		
 		// CSRF, CORS
 		http.csrf((csrf) -> csrf.disable()); // CSRF 비활성화
 		http.cors(Customizer.withDefaults());
@@ -45,15 +51,16 @@ public class SecurityConfig {
 		// JwtAuthFilter를 UsernamePasswordAuthenticationFilter 앞에 추가 
 		http.addFilterBefore(new JwtAuthFilter(customUserDetailsService, jwtUtils), UsernamePasswordAuthenticationFilter.class);
 		
-//		http.exceptionHandling(
-//				exceptionHandling -> exceptionHandling
-//									.authenticationEntryPoint(authenticationEntryPoint)
-//									.accessDeniedHandler(accessDeniedHandler)
-//		);
+		http.exceptionHandling(
+				exceptionHandling -> exceptionHandling
+									.authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+									.accessDeniedHandler(new JwtAccessDenyHandler()) // 권한이 없는 경우
+		);
 		
 		http.authorizeHttpRequests(
 				authorize -> authorize
 							.requestMatchers(AUTH_WHITE_LIST).permitAll() // 특정 경로는 인증 없이 허용
+//							.requestMatchers("/admin/**").hasAuthority("ADMIN")
 							.anyRequest().authenticated() // 나머지는 인증 필요
 		);
 		

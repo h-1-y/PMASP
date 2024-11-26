@@ -24,8 +24,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		System.out.println("JwtAuthFilter Class ====================== ");
-		
 		String authorizationHeader = request.getHeader("Authorization");
 		
 		System.out.println("authorizationHeader ============ " + authorizationHeader);
@@ -41,7 +39,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 				
 				Long id = jwtUtils.getMemberId(token);
 				
-				System.out.println("jwtUtils.validateToken(token) ======== ");
+				System.out.println("Long id = jwtUtils.getMemberId(token); ===== " + id);
 				
 				// 유저와 토큰 일치시 userDetails 생성
 				UserDetails userDetails = customUserDetailsService.loadUserByUsername(id.toString());

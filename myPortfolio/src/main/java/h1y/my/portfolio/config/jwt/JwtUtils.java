@@ -55,8 +55,6 @@ public class JwtUtils {
 		claims.put("loginId", infoDto.getLoginId());
 		claims.put("name", infoDto.getName());
 		
-		System.out.println("JwtUtils Class claims.toString() ============= " + claims.toString());
-		
 		ZonedDateTime now = ZonedDateTime.now();
 		ZonedDateTime tokenValidity = now.plusSeconds(expireTime);
 		
@@ -105,7 +103,9 @@ public class JwtUtils {
         } catch (IllegalArgumentException e) {
             log.info("JWT claims string is empty.", e);
         }
+        
         return false;
+        
     }
     
 }

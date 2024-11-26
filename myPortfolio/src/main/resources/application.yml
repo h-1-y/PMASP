@@ -23,5 +23,5 @@ logging.level :
 
 
 jwt : 
-  expiration_time: 86400000 #1일
+  expiration_time: 3600000 # 1시간 ( 60 * 60 * 1000 )
   secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa

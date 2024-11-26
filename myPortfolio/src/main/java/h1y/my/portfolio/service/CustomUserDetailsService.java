@@ -20,13 +20,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		
-		Member member = memberJpaRepositoy.findById(Long.parseLong(id)).get();
-		
-		if ( member == null ) throw new UsernameNotFoundException("잘못된 접근입니다.");
+		Member member = memberJpaRepositoy.findById(Long.parseLong(id))
+				.orElseThrow(() -> new IllegalArgumentException("회원 객체 없음"));
 
 		MemberInfoDto infoDto = member.toDto();
 		
 		return new CustomUserDetails(infoDto);
+		
 	}
 	
 }
