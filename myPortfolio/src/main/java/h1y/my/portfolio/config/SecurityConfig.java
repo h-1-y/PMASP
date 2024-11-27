@@ -10,11 +10,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import h1y.my.portfolio.config.jwt.CustomUserDetailsService;
 import h1y.my.portfolio.config.jwt.JwtAccessDenyHandler;
 import h1y.my.portfolio.config.jwt.JwtAuthFilter;
 import h1y.my.portfolio.config.jwt.JwtAuthenticationEntryPoint;
 import h1y.my.portfolio.config.jwt.JwtUtils;
-import h1y.my.portfolio.service.CustomUserDetailsService;
+import io.jsonwebtoken.io.Decoders;
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -27,7 +28,7 @@ public class SecurityConfig {
 	private final JwtUtils jwtUtils;
 	
 	private static final String [] AUTH_WHITE_LIST = { 
-					  "/api/v1/members/**", "/api/v1/auth/**", "/swagger-ui/**" 
+					  "/api/v1/member/**", "/api/v1/auth/**", "/swagger-ui/**" 
 					, "/swagger-ui-custom.html", "/swagger-ui.html", "/api-docs/**"
 					, "/api-docs", "/v3/api-docs/**"
 				};

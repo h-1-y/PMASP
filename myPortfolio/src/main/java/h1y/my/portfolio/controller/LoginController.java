@@ -27,6 +27,7 @@ public class LoginController {
 		return ResponseEntity.ok()
 				.header("Authorization", "Bearer " + token)
 				.body(DataResponseDto.of(token, "로그인 되었습니다."));
+		
 	}
 	
 }

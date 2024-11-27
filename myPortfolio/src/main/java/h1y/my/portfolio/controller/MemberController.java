@@ -23,17 +23,17 @@ public class MemberController {
 
 	private final MemberService memberService;
 	
-	@PostMapping("/api/v1/members")
+	@PostMapping("/api/v1/member")
 	public DataResponseDto<Object> save(@Valid @RequestBody MemberJoinRequestDto memberJoinRequestDto) {
 		return DataResponseDto.of(memberService.join(memberJoinRequestDto), "회원가입 처리되었습니다.");
 	}
 	
-	@GetMapping("/api/v1/members")
+	@GetMapping("/api/v1/member")
 	public DataResponseDto<List<Member>> getMembers() {
 		return DataResponseDto.of(memberService.getMembers());
 	}
 	
-	@GetMapping("/api/v1/members/{id}")
+	@GetMapping("/api/v1/member/{id}")
 	public DataResponseDto<Member> getMember(@PathVariable("id") Long id) {
 		return DataResponseDto.of(memberService.getMember(id));
 	}
