@@ -1,6 +1,10 @@
 package h1y.my.portfolio.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.Comment;
+import org.springframework.context.annotation.Description;
 
 import h1y.my.portfolio.dto.MemberInfoDto;
 import jakarta.persistence.Column;
@@ -12,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,6 +35,7 @@ import lombok.NoArgsConstructor;
 					, initialValue = 1
 					, allocationSize = 1
 				  )
+@Comment(value = "회원 테이블")
 public class Member extends BaseEntity {
 
 	@Id
@@ -76,12 +82,15 @@ public class Member extends BaseEntity {
 //	@Column(name = "M_ZIPCODE")
 //	@Comment(value = "우편번호")
 //	private String zipcode;
-//	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "job_id")
-//	@Comment(value = "직군 일련번호")
-//	private Job job;
-//	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "job_id")
+	@Comment(value = "직군 일련번호")
+	private Job job;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Experienced> expList = new ArrayList<>();
+	
 //	@Column(name = "EXPERIENCED_YN")
 //	@Comment(value = "경력 여부")
 //	private String experiencedYn;
