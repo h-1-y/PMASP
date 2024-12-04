@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Description;
 
 import h1y.my.portfolio.dto.MemberInfoDto;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -71,17 +72,8 @@ public class Member extends BaseEntity {
 //	@Comment(value = "전화번호")
 //	private String phone;
 //	
-//	@Column(name = "M_ADRS")
-//	@Comment(value = "주소")
-//	private String address;
-//	
-//	@Column(name = "M_ADRS_DTL")
-//	@Comment(value = "상세 주소")
-//	private String addressDetail;
-//	
-//	@Column(name = "M_ZIPCODE")
-//	@Comment(value = "우편번호")
-//	private String zipcode;
+	@Embedded
+	private Address address;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "job_id")

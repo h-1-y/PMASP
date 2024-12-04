@@ -1,6 +1,11 @@
 package h1y.my.portfolio.dto;
 
+import org.hibernate.annotations.Comment;
+
+import h1y.my.portfolio.entity.Address;
+import h1y.my.portfolio.entity.Job;
 import h1y.my.portfolio.entity.Member;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -24,11 +29,24 @@ public class MemberJoinRequestDto {
 	@Size(min = 2, max = 30, message = "이름은 2자 ~ 30자 사이로 입력해주세요.")
 	private String name;
 	
-	public Member toEntity() {
+//	@NotBlank(message = "직군을 선택해주세요.")
+	private Long jobId;
+	
+	@NotBlank(message = "주소를 입력해주세요.")
+	private String address;
+	
+	private String addressDetail;
+	
+	@NotBlank(message = "우편번호를 입력해주세요.")
+	private String zipcode;
+	
+	public Member toEntity(Job job) {
 		return Member.builder()
 				.loginId(this.loginId)
 				.password(this.password)
 				.name(this.name)
+				.job(job)
+				.address(new Address(this.address, this.addressDetail, this.zipcode))
 				.build();
 	}
 	

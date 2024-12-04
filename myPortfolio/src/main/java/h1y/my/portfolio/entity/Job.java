@@ -48,4 +48,9 @@ public class Job extends BaseEntity {
 //	@OneToMany(mappedBy = "job")
 //	private List<Member> members = new ArrayList<>();
 	
+	public Job(String name) {
+		super();
+		this.name = name;
+	}
+		
 }
