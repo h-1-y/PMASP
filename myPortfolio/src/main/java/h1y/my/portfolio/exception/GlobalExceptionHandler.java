@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import h1y.my.portfolio.dto.ErrorResponseDto;
+import h1y.my.portfolio.common.dto.ErrorResponseDto;
 import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice

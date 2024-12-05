@@ -1,4 +1,4 @@
-package h1y.my.portfolio.service;
+package h1y.my.portfolio.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +13,7 @@ import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.repository.JobJpaRepository;
 import h1y.my.portfolio.repository.MemberJpaRepositoy;
 import h1y.my.portfolio.repository.MemberRepository;
+import h1y.my.portfolio.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

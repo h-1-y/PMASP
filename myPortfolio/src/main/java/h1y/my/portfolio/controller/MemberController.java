@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import h1y.my.portfolio.dto.DataResponseDto;
+import h1y.my.portfolio.common.dto.DataResponseDto;
 import h1y.my.portfolio.dto.MemberJoinRequestDto;
 import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.service.MemberService;
@@ -24,7 +24,7 @@ public class MemberController {
 	private final MemberService memberService;
 	
 	@PostMapping("/api/v1/member")
-	public DataResponseDto<Object> save(@Valid @RequestBody MemberJoinRequestDto memberJoinRequestDto) {
+	public DataResponseDto<Long> save(@Valid @RequestBody MemberJoinRequestDto memberJoinRequestDto) {
 		return DataResponseDto.of(memberService.join(memberJoinRequestDto), "회원가입 처리되었습니다.");
 	}
 	

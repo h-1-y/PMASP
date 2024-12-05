@@ -1,4 +1,4 @@
-package h1y.my.portfolio.dto;
+package h1y.my.portfolio.common.dto;
 
 public class ErrorResponseDto extends ResponseDto {
 

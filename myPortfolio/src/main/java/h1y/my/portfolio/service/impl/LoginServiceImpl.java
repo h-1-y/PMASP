@@ -1,4 +1,4 @@
-package h1y.my.portfolio.service;
+package h1y.my.portfolio.service.impl;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +9,7 @@ import h1y.my.portfolio.dto.LoginRequestDto;
 import h1y.my.portfolio.dto.MemberInfoDto;
 import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.repository.MemberJpaRepositoy;
+import h1y.my.portfolio.service.LoginService;
 import lombok.RequiredArgsConstructor;
 
 @Service

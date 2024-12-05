@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import h1y.my.portfolio.dto.DataResponseDto;
+import h1y.my.portfolio.common.dto.DataResponseDto;
 import h1y.my.portfolio.dto.LoginRequestDto;
 import h1y.my.portfolio.service.LoginService;
 import jakarta.validation.Valid;
