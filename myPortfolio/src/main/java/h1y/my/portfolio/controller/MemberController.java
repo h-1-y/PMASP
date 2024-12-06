@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import h1y.my.portfolio.common.dto.DataResponseDto;
 import h1y.my.portfolio.dto.MemberJoinRequestDto;
+import h1y.my.portfolio.dto.MemberResponseDto;
 import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.service.MemberService;
 import jakarta.validation.Valid;
@@ -29,7 +30,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/api/v1/member")
-	public DataResponseDto<List<Member>> getMembers() {
+	public DataResponseDto<List<MemberResponseDto>> getMembers() {
 		return DataResponseDto.of(memberService.getMembers());
 	}
 	

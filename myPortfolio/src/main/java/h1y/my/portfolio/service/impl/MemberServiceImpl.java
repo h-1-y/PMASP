@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import h1y.my.portfolio.dto.MemberJoinRequestDto;
+import h1y.my.portfolio.dto.MemberResponseDto;
 import h1y.my.portfolio.entity.Job;
 import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.repository.JobJpaRepository;
@@ -23,9 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberJpaRepositoy memberJpaRepositoy;
+	private final MemberRepository memberRepository;
 	private final JobJpaRepository jobJpaRepository;
 	private final PasswordEncoder passwordEncoder;
-//	private final MemberRepository memberRepository;
 	
 	@Override
 	public Long join(MemberJoinRequestDto memberJoinRequestDto) {
@@ -54,8 +55,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public List<Member> getMembers() {
-		List<Member> members = memberJpaRepositoy.findAll();
+	public List<MemberResponseDto> getMembers() {
+		List<MemberResponseDto> members = memberRepository.getResponseMembers();
 		return members;
 	}
 	
