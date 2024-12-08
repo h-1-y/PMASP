@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import h1y.my.portfolio.dto.MemberJoinRequestDto;
 import h1y.my.portfolio.dto.MemberResponseDto;
+import h1y.my.portfolio.dto.MemberSearchDto;
 import h1y.my.portfolio.entity.Job;
 import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.repository.JobJpaRepository;
@@ -49,14 +50,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Member getMember(Long id) {
-		Optional<Member> findMember = memberJpaRepositoy.findById(id);
-		return findMember.get();
+	public MemberResponseDto getMember(Long id) {
+		MemberResponseDto findMember = memberJpaRepositoy.getMember(id);
+		return findMember;
 	}
 	
 	@Override
-	public List<MemberResponseDto> getMembers() {
-		List<MemberResponseDto> members = memberRepository.getResponseMembers();
+	public List<MemberResponseDto> getMembers(MemberSearchDto memberSearchDto) {
+		List<MemberResponseDto> members = memberRepository.getResponseMembers(memberSearchDto);
 		return members;
 	}
 	

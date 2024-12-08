@@ -33,16 +33,16 @@ public class InitMember {
 		@Transactional
 		public void init() {
 			
-			for ( int i=1; i<=10; i++ ) {
-				Member member = new Member("loginId" + i, "password" + i, "name" + i);
-				em.persist(member);
-			}
-			
 			Job job1 = new Job("Developer");
 			Job job2 = new Job("Designer");
 			
 			em.persist(job1);
 			em.persist(job2);
+			
+			for ( int i=1; i<=10; i++ ) {
+				Member member = new Member("loginId" + i, "password" + i, "name" + i, ( i%2 == 0 ? job1 : job2 ));
+				em.persist(member);
+			}
 			
 		}
 		

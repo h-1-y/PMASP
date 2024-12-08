@@ -98,6 +98,13 @@ public class Member extends BaseEntity {
 		this.name = name;
 	}
 	
+	public Member(String loginId, String password, String name, Job job) {
+		this.loginId = loginId;
+		this.password = password;
+		this.name = name;
+		this.job = job;
+	}
+	
 	public MemberInfoDto toDto() {
 		return MemberInfoDto.builder()
 				.id(this.id)

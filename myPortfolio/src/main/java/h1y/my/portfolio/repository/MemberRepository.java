@@ -6,14 +6,15 @@ import static h1y.my.portfolio.entity.QMember.member;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import h1y.my.portfolio.dto.MemberResponseDto;
+import h1y.my.portfolio.dto.MemberSearchDto;
 import h1y.my.portfolio.dto.QMemberResponseDto;
-import h1y.my.portfolio.entity.Member;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 
 @Repository
 public class MemberRepository {
@@ -26,7 +27,7 @@ public class MemberRepository {
 		this.queryFactory = new JPAQueryFactory(em);
 	}
 	
-	public List<MemberResponseDto> getResponseMembers() {
+	public List<MemberResponseDto> getResponseMembers(MemberSearchDto memberSearchDto) {
 		
 		return queryFactory
 				.select(
@@ -42,8 +43,25 @@ public class MemberRepository {
 						)
 				.from(member)
 				.leftJoin(member.job, job)
+				.where(
+						  loginIdEq(memberSearchDto.getLoginId())
+						, usernameEq(memberSearchDto.getUsername())
+						, jobNameEq(memberSearchDto.getJobName())
+					  )
 				.fetch();
 		
+	}
+	
+	private BooleanExpression loginIdEq(String loginId) {
+		return StringUtils.hasText(loginId) ? member.loginId.eq(loginId) : null;
+	}
+	
+	private BooleanExpression usernameEq(String username) {
+		return StringUtils.hasText(username) ? member.name.eq(username) : null;
+	}
+	
+	private BooleanExpression jobNameEq(String jobName) {
+		return StringUtils.hasText(jobName) ? job.name.eq(jobName) : null;
 	}
 	
 }

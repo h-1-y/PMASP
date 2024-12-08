@@ -4,14 +4,15 @@ import java.util.List;
 
 import h1y.my.portfolio.dto.MemberJoinRequestDto;
 import h1y.my.portfolio.dto.MemberResponseDto;
+import h1y.my.portfolio.dto.MemberSearchDto;
 import h1y.my.portfolio.entity.Member;
 
 public interface MemberService {
 
 	Long join(MemberJoinRequestDto memberJoinRequestDto);
 	
-	Member getMember(Long id);
+	MemberResponseDto getMember(Long id);
 	
-	List<MemberResponseDto> getMembers();
+	List<MemberResponseDto> getMembers(MemberSearchDto memberSearchDto);
 	
 }
