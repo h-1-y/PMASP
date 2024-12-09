@@ -2,6 +2,8 @@ package h1y.my.portfolio.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +16,6 @@ import h1y.my.portfolio.common.dto.DataResponseDto;
 import h1y.my.portfolio.dto.MemberJoinRequestDto;
 import h1y.my.portfolio.dto.MemberResponseDto;
 import h1y.my.portfolio.dto.MemberSearchDto;
-import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("/api/v1/member")
-	public DataResponseDto<List<MemberResponseDto>> getMembers(MemberSearchDto memberSearchDto) {
-		return DataResponseDto.of(memberService.getMembers(memberSearchDto));
+	public DataResponseDto<Page<MemberResponseDto>> getMembers(MemberSearchDto memberSearchDto, Pageable pageable) {
+		return DataResponseDto.of(memberService.getMembers(memberSearchDto, pageable));
 	}
 	
 	@GetMapping("/api/v1/member/{id}")

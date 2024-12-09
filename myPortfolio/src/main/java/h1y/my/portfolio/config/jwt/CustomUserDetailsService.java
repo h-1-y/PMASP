@@ -7,19 +7,19 @@ import org.springframework.stereotype.Service;
 
 import h1y.my.portfolio.dto.MemberInfoDto;
 import h1y.my.portfolio.entity.Member;
-import h1y.my.portfolio.repository.MemberJpaRepositoy;
+import h1y.my.portfolio.repository.MemberRepositoy;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-	private final MemberJpaRepositoy memberJpaRepositoy;
+	private final MemberRepositoy memberRepositoy;
 	
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		
-		Member member = memberJpaRepositoy.findById(Long.parseLong(id))
+		Member member = memberRepositoy.findById(Long.parseLong(id))
 				.orElseThrow(() -> new IllegalArgumentException("회원 객체 없음"));
 
 		MemberInfoDto infoDto = member.toDto();

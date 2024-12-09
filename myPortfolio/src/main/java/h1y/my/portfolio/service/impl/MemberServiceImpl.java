@@ -1,9 +1,7 @@
 package h1y.my.portfolio.service.impl;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +11,7 @@ import h1y.my.portfolio.dto.MemberSearchDto;
 import h1y.my.portfolio.entity.Job;
 import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.repository.JobJpaRepository;
-import h1y.my.portfolio.repository.MemberJpaRepositoy;
-import h1y.my.portfolio.repository.MemberRepository;
+import h1y.my.portfolio.repository.MemberRepositoy;
 import h1y.my.portfolio.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberServiceImpl implements MemberService {
 
-	private final MemberJpaRepositoy memberJpaRepositoy;
-	private final MemberRepository memberRepository;
+	private final MemberRepositoy memberRepositoy;
 	private final JobJpaRepository jobJpaRepository;
 	private final PasswordEncoder passwordEncoder;
 	
@@ -33,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 	public Long join(MemberJoinRequestDto memberJoinRequestDto) {
 		
 		// 회원 아이디 중복 체크
-		int count = memberJpaRepositoy.findJoinLoginIdCheck(memberJoinRequestDto.getLoginId());
+		int count = memberRepositoy.findJoinLoginIdCheck(memberJoinRequestDto.getLoginId());
 		
 		if ( count >= 1 ) throw new IllegalStateException("이미 존재하는 회원입니다.");
 		
@@ -43,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
 		memberJoinRequestDto.setPassword(passwordEncoder.encode(memberJoinRequestDto.getPassword()));
 		
 		Member member = memberJoinRequestDto.toEntity(job);
-		memberJpaRepositoy.save(member);
+		memberRepositoy.save(member);
 		
 		return member.getId();
 		
@@ -51,13 +47,13 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public MemberResponseDto getMember(Long id) {
-		MemberResponseDto findMember = memberJpaRepositoy.getMember(id);
+		MemberResponseDto findMember = memberRepositoy.getMember(id);
 		return findMember;
 	}
 	
 	@Override
-	public List<MemberResponseDto> getMembers(MemberSearchDto memberSearchDto) {
-		List<MemberResponseDto> members = memberRepository.getResponseMembers(memberSearchDto);
+	public Page<MemberResponseDto> getMembers(MemberSearchDto memberSearchDto, Pageable pageable) {
+		Page<MemberResponseDto> members = memberRepositoy.getMembers(memberSearchDto, pageable);
 		return members;
 	}
 	

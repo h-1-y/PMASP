@@ -1,18 +1,13 @@
-package h1y.my.portfolio.service;
+package h1y.my.portfolio.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import h1y.my.portfolio.dto.MemberJoinRequestDto;
 import h1y.my.portfolio.dto.MemberResponseDto;
 import h1y.my.portfolio.dto.MemberSearchDto;
 
-public interface MemberService {
+public interface MemberRepositoryCustom {
 
-	Long join(MemberJoinRequestDto memberJoinRequestDto);
-	
-	MemberResponseDto getMember(Long id);
-	
 	Page<MemberResponseDto> getMembers(MemberSearchDto memberSearchDto, Pageable pageable);
 	
 }

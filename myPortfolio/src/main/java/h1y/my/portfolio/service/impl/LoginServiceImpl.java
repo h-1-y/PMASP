@@ -8,7 +8,7 @@ import h1y.my.portfolio.config.jwt.JwtUtils;
 import h1y.my.portfolio.dto.LoginRequestDto;
 import h1y.my.portfolio.dto.MemberInfoDto;
 import h1y.my.portfolio.entity.Member;
-import h1y.my.portfolio.repository.MemberJpaRepositoy;
+import h1y.my.portfolio.repository.MemberRepositoy;
 import h1y.my.portfolio.service.LoginService;
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-	private final MemberJpaRepositoy memberJpaRepositoy;
+	private final MemberRepositoy memberRepositoy;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtUtils jwtUtils;
 	
@@ -26,7 +26,7 @@ public class LoginServiceImpl implements LoginService {
 		String loginId = loginRequestDto.getLoginId();
 		String password = loginRequestDto.getPassword();
 		
-		Member member = memberJpaRepositoy.findByLoginId(loginId);
+		Member member = memberRepositoy.findByLoginId(loginId);
 		
 		if ( member == null ) throw new UsernameNotFoundException("아이디 또는 비밀번호가 잘못되었습니다.");
 		if ( !passwordEncoder.matches(password, member.getPassword()) ) 
