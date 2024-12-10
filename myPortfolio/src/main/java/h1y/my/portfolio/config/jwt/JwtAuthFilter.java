@@ -7,6 +7,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import h1y.my.portfolio.common.dto.ErrorResponseDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,6 +56,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 					
 				}
+				
+			} else {
+				
+				System.out.println("토큰이 유효하지 않음 !!!!!!!!!!!!!!!!!!!!!!!!!");
+				
+				// 에러 응답 DTO 생성
+				ErrorResponseDto errorDto = new ErrorResponseDto(401, "UNAUTHORIZED", "사용자가 인증되지 않거나, 토큰이 유효하지 않음");
+				
+				// 상태 코드와 에러 메시지를 JSON 형식으로 응답 본문에 설정
+				response.setCharacterEncoding("UTF-8");
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  // 401 상태 코드
+				response.setContentType("application/json");  // 응답 타입: JSON
+				response.getWriter().write(new ObjectMapper().writeValueAsString(errorDto));  // JSON 형식으로 응답 본문 작성
+				return;
 				
 			}
 			

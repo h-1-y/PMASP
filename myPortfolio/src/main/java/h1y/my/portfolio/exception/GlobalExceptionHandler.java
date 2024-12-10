@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import h1y.my.portfolio.common.dto.ErrorResponseDto;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice
@@ -41,7 +42,7 @@ public class GlobalExceptionHandler {
 	
 	// STATUS CODE : 401
 	// Unauthorized
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ExceptionHandler(ExpiredJwtException.class)
 	public ResponseEntity<ErrorResponseDto> handleUnauthorizedExceptions() {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(printLogAndReturn(401, "UNAUTHORIZED", "사용자가 인증되지 않거나, 토큰이 유효하지 않음"));
 	}
