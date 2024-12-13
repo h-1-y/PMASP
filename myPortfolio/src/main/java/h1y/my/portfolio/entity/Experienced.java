@@ -49,11 +49,11 @@ public class Experienced extends BaseEntity {
 	@Comment(value = "회사명")
 	private String companyName;
 	
-	@Column(name = "START_DATE", length = 8, nullable = false)
+	@Column(name = "START_DATE", length = 6, nullable = false)
 	@Comment(value = "입사일")
 	private String startDate;
 	
-	@Column(name = "END_DATE", length = 8)
+	@Column(name = "END_DATE", length = 6)
 	@Comment(value = "퇴사일")
 	private String endDate;
 	
