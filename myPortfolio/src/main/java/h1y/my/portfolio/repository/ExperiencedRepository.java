@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import h1y.my.portfolio.entity.Experienced;
 
 @Repository
-public interface ExperiencedRepository extends JpaRepository<Experienced, Long> {
+public interface ExperiencedRepository extends JpaRepository<Experienced, Long>, ExperiencedRepositoryCustom {
 
 	
 	

@@ -1,9 +1,12 @@
 package h1y.my.portfolio.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import h1y.my.portfolio.config.jwt.JwtUtils;
 import h1y.my.portfolio.dto.ExperiencedRequestDto;
+import h1y.my.portfolio.dto.ExperiencedResponseDto;
 import h1y.my.portfolio.entity.Experienced;
 import h1y.my.portfolio.entity.Member;
 import h1y.my.portfolio.repository.ExperiencedRepository;
@@ -33,6 +36,12 @@ public class ExperiencedServiceImpl implements ExperiencedService {
 		
 		return exp.getId();
 		
+	}
+	
+	@Override
+	public Page<ExperiencedResponseDto> getExperienced(Long id, Pageable pageable) {
+		Page<ExperiencedResponseDto> exps = experiencedRepository.getExperienced(id, pageable);
+		return exps;
 	}
 	
 }
