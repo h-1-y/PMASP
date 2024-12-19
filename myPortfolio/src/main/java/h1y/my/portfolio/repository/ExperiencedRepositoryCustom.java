@@ -7,6 +7,8 @@ import h1y.my.portfolio.dto.ExperiencedResponseDto;
 
 public interface ExperiencedRepositoryCustom {
 
+	Page<ExperiencedResponseDto> getExperienced(Pageable pageable);
+	
 	Page<ExperiencedResponseDto> getExperienced(Long id, Pageable pageable);
 	
 }

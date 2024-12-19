@@ -27,6 +27,37 @@ public class ExperiencedRepositoryCustomImpl implements ExperiencedRepositoryCus
 	}
 	
 	@Override
+	public Page<ExperiencedResponseDto> getExperienced(Pageable pageable) {
+		
+		List<ExperiencedResponseDto> result = queryFactory
+				.select(
+							new QExperiencedResponseDto(
+										  experienced.id
+										, member.id.as("memberId")
+										, member.name.as("memberName")
+										, experienced.companyName
+										, experienced.startDate
+										, experienced.endDate
+										, experienced.department
+										, experienced.rank
+									)
+						)
+				.from(experienced)
+				.leftJoin(experienced.member, member)
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize())
+				.fetch();
+		
+		JPAQuery<Long> countQuery = queryFactory
+				.select(experienced.count())
+				.from(experienced)
+				.leftJoin(experienced.member, member);
+		
+		return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
+		
+	}
+	
+	@Override
 	public Page<ExperiencedResponseDto> getExperienced(Long id, Pageable pageable) {
 		
 		List<ExperiencedResponseDto> result = queryFactory

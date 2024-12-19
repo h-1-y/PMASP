@@ -10,6 +10,8 @@ public interface ExperiencedService {
 
 	Long setExperienced(ExperiencedRequestDto experiencedRequestDto, String authorization);
 	
+	Page<ExperiencedResponseDto> getExperienced(Pageable pageable);
+	
 	Page<ExperiencedResponseDto> getExperienced(Long id, Pageable pageable);
 	
 }

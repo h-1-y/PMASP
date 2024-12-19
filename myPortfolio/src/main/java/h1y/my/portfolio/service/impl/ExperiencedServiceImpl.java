@@ -39,6 +39,12 @@ public class ExperiencedServiceImpl implements ExperiencedService {
 	}
 	
 	@Override
+	public Page<ExperiencedResponseDto> getExperienced(Pageable pageable) {
+		Page<ExperiencedResponseDto> exps = experiencedRepository.getExperienced(pageable);
+		return exps;
+	}
+	
+	@Override
 	public Page<ExperiencedResponseDto> getExperienced(Long id, Pageable pageable) {
 		Page<ExperiencedResponseDto> exps = experiencedRepository.getExperienced(id, pageable);
 		return exps;

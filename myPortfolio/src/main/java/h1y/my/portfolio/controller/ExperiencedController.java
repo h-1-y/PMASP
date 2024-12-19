@@ -30,6 +30,11 @@ public class ExperiencedController {
 		return DataResponseDto.of(experiencedService.setExperienced(experiencedRequestDto, authorization), "경력사항이 등록되었습니다.");
 	}
 	
+	@GetMapping("/api/v1/experienced")
+	public DataResponseDto<Page<ExperiencedResponseDto>> getExperienceds(Pageable pageable) {
+		return DataResponseDto.of(experiencedService.getExperienced(pageable));
+	}
+	
 	@GetMapping("/api/v1/experienced/{id}")
 	public DataResponseDto<Page<ExperiencedResponseDto>> getExperienced(@PathVariable("id") Long id, Pageable pageable) {
 		return DataResponseDto.of(experiencedService.getExperienced(id, pageable));
