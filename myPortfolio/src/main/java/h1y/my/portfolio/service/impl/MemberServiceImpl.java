@@ -10,7 +10,7 @@ import h1y.my.portfolio.dto.MemberResponseDto;
 import h1y.my.portfolio.dto.MemberSearchDto;
 import h1y.my.portfolio.entity.Job;
 import h1y.my.portfolio.entity.Member;
-import h1y.my.portfolio.repository.JobJpaRepository;
+import h1y.my.portfolio.repository.JobRepository;
 import h1y.my.portfolio.repository.MemberRepositoy;
 import h1y.my.portfolio.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepositoy memberRepositoy;
-	private final JobJpaRepository jobJpaRepository;
+	private final JobRepository jobJpaRepository;
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override

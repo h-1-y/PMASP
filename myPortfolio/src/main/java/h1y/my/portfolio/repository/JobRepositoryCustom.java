@@ -1,17 +1,12 @@
-package h1y.my.portfolio.service;
+package h1y.my.portfolio.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import h1y.my.portfolio.dto.JobRequestDto;
 import h1y.my.portfolio.dto.JobResponseDto;
 
-public interface JobService {
+public interface JobRepositoryCustom {
 
-	Long setJob(JobRequestDto jobRequestDto);
-	
-	JobResponseDto getJob(Long id);
-	
 	Page<JobResponseDto> getJobs(Pageable pageable);
 	
 }
